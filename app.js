@@ -4,9 +4,9 @@ var parrafos = document.querySelectorAll("#form p");
 
 const regExp = {
   name: /^[A-ZÑa-zñáéíóúÁÉÍÓÚ'° ]+$/,
-  card: /^\d{16}$/ ,
+  card: /^\d{16}$/,
   month: /^(0?[1-9]|1[0-2])$/,
-  year: /^(20[2-9][4-9]|[3-9]\d{3})$/ ,
+  year: /^(20[2-9][4-9]|[3-9]\d{3})$/,
   cvc: /^\d{3}$/,
 };
 
@@ -43,14 +43,12 @@ const validarCampos = (expresion, input, campo) => {
   if (expresion.test(input.value)) {
     elemento.classList.add("green");
     elemento.classList.remove("red");
-    document.getElementById(campo + "-error").innerHTML =
-          "";
+    document.getElementById(campo + "-error").innerHTML = "";
     campos[campo] = true;
   } else {
     elemento.classList.add("red");
     elemento.classList.remove("green");
-    document.getElementById(campo + "-error").innerHTML =
-          "Check the info";
+    document.getElementById(campo + "-error").innerHTML = "Check the info";
     campos[campo] = false;
   }
 };
@@ -70,7 +68,7 @@ formulario.addEventListener("submit", (e) => {
     });
 
     document.getElementById("card-name").innerHTML = "Name";
-    document.getElementById("card-number").innerHTML = "0000000000000000";
+    document.getElementById("card-number").innerHTML = "0000 0000 0000 0000";
     document.getElementById("card-month").innerHTML = "00";
     document.getElementById("card-year").innerHTML = "0000";
     document.getElementById("cvc-card").innerHTML = "123";
@@ -88,6 +86,7 @@ formulario.addEventListener("submit", (e) => {
       customClass: {
         container: "swal-font",
         icon: "custom-icon",
+        iconColor: "#ff0000",
       },
     });
   } else {
@@ -117,7 +116,9 @@ inputs_card.forEach((input) => {
   var inputText = document.getElementById(input.target);
 
   inputElement.addEventListener("input", (e) => {
-    inputText.textContent = e.target.value;
+    const cardValue = e.target.value
+      .replace(/\s/g, "")
+      .replace(/(\d{4})/g, "$1 ");
+    inputText.textContent = cardValue;
   });
 });
-
